@@ -23,9 +23,9 @@
 		}
 	],
 	"files": [
-		"build",
 		"src"
 	],
+	"main": "src/color.ks",
 	"dependencies": {
 		"@zokugun/lang": "github:zokugunks/lang"
 	},
@@ -49,6 +49,7 @@
 	},
 	"keywords": [
 		"kaoscript",
+    "zokugun",
 		"color"
 	]
 }
