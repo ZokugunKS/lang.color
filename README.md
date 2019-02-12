@@ -4,10 +4,10 @@
 [![kaoscript](https://img.shields.io/badge/language-kaoscript-orange.svg)](https://github.com/kaoscript/kaoscript)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 [![NPM Version](https://img.shields.io/npm/v/@zokugun/lang.color.svg?colorB=green)](https://www.npmjs.com/package/@zokugun/lang.color)
-[![Dependency Status](https://badges.depfu.com/badges//overview.svg)](https://depfu.com/github/zokugun/lang.color)
-[![Build Status](https://travis-ci.org/zokugun/lang.color.svg?branch=master)](https://travis-ci.org/zokugun/lang.color)
-[![CircleCI](https://circleci.com/gh/zokugun/parser/tree/lang.color.svg?style=shield)](https://circleci.com/gh/zokugun/lang.color/tree/master)
-[![Coverage Status](https://img.shields.io/coveralls/zokugun/lang.color/master.svg)](https://coveralls.io/github/zokugun/lang.color)
+[![Dependency Status](https://badges.depfu.com/badges/000941dbceefbec0cdabd2e6215fc4aa/overview.svg)](https://depfu.com/github/zokugun/lang.color)
+[![Build Status](https://travis-ci.org/ZokugunKS/lang.color.svg?branch=master)](https://travis-ci.org/ZokugunKS/lang.color)
+[![CircleCI](https://circleci.com/gh/ZokugunKS/lang.color/tree/master.svg?style=shield)](https://circleci.com/gh/ZokugunKS/lang.color/tree/master)
+[![Coverage Status](https://img.shields.io/coveralls/ZokugunKS/lang.color/master.svg)](https://coveralls.io/github/ZokugunKS/lang.color)
 
 Provides a color class with the support of the rgb space with support of extensible spaces.
 
