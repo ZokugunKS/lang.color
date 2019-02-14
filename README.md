@@ -9,7 +9,7 @@
 [![CircleCI](https://circleci.com/gh/ZokugunKS/lang.color/tree/master.svg?style=shield)](https://circleci.com/gh/ZokugunKS/lang.color/tree/master)
 [![Coverage Status](https://img.shields.io/coveralls/ZokugunKS/lang.color/master.svg)](https://coveralls.io/github/ZokugunKS/lang.color)
 
-Provides a color class with the support of the rgb space with support of extensible spaces.
+Provides a color class with the support of the RGB space with support of extensible spaces.
 
 Getting Started
 ---------------
@@ -18,14 +18,17 @@ With [node](http://nodejs.org) previously installed:
 
 	npm install @zokugun/lang.color
 
-Use it:
+Use it with `JavaScript`:
 
 ```javascript
-const { Color } = require('@zokugun/lang.color')();
+require('kaoscript/register');
+
+const { Color, Space } = require('@zokugun/lang.color')();
 
 const c = new Color('#ff0');
 ```
 
+Use it with `kaoscript`:
 ```kaoscript
 import '@zokugun/lang.color'
 
@@ -96,8 +99,8 @@ Spaces
 
 Spaces 										| Package
 ------ 										| -------
-hsl, hsb/hsv, hsi, hwb						| @zokugun/lang.color.alvy
-CIELAB, CIELUV, CIELCh, CIEXYZ, CIEYxy		| @zokugun/lang.color.cie
+hsl, hsb/hsv, hsi, hwb						| [@zokugun/lang.color.alvy](https://github.com/ZokugunKS/lang.color.alvy)
+CIELAB, CIELUV, CIELCh, CIEXYZ, CIEYxy		| [@zokugun/lang.color.cie](https://github.com/ZokugunKS/lang.color.cie)
 
 Inspired by
 -----------
