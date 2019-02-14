@@ -159,7 +159,7 @@ describe('color.space', func() {
 			expect(c.space()).to.equal('srgb')
 
 			expect(c.like('rvb')).to.eql({
-				_alpha: 0,
+				_alpha: 1,
 				_blue: 0,
 				_rouge: 255,
 				_space: 'rvb',

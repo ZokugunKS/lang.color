@@ -212,9 +212,9 @@ func $component(component, name: string, space: string): void { // {{{
 	$components[name].spaces[space] = true
 } // }}}
 
-func $convert(that: Color, space: string, result = {_alpha: 0}): object ~ Error { // {{{
+func $convert(that: Color, space: string, result = {_alpha: that._alpha}): object ~ Error { // {{{
 	if ?(s = $spaces[that._space]).converters[space] {
-		let args := [that[component.field] for name, component of s.components]
+		const args = [that[component.field] for name, component of s.components]
 
 		args.push(result)
 
@@ -985,9 +985,9 @@ export class Color {
 	} // }}}
 
 	private setField(name, value: number | string): Color ~ Error { // {{{
-		let component
+		let component = $components[name]
 
-		if $components[name].spaces[this._space]? {
+		if component.spaces[this._space]? {
 			component = $spaces[this._space].components[name]
 		}
 		else if component.families.length > 1 {
@@ -1056,10 +1056,10 @@ Color.registerSpace!({
 	name: Space::SRGB
 	alias: [Space::RGB]
 	formatters: {
-		hex(that: Color): string { // {{{
+		hex(that): string { // {{{
 			return $hex(that)
 		} // }}}
-		srgb(that: Color): string { // {{{
+		srgb(that): string { // {{{
 			if that._alpha == 1 {
 				return 'rgb(' + that._red + ', ' + that._green + ', ' + that._blue + ')'
 			}
