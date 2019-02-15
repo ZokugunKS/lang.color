@@ -187,7 +187,7 @@ let $caster = {
 	alpha(n = null, percentage = false): Number { // {{{
 		const i = parseFloat(n)
 
-		return 1 if i is NaN else (percentage ? i / 100 : i).limit(0, 1).round(3)
+		return 1 if i == NaN else (percentage ? i / 100 : i).limit(0, 1).round(3)
 	} // }}}
 	ff(n): Number { // {{{
 		return parseFloat(n).limit(0, 255).round()
