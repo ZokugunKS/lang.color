@@ -7,7 +7,7 @@ extern {
 
 import {
 	'chai'		for expect
-	'../src/color.ks'
+	'..'
 }
 
 Color.registerSpace!({ // {{{ rvb

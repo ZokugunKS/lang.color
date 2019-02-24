@@ -7,7 +7,7 @@ extern {
 
 import {
 	'chai'		for expect
-	'../src/color.ks'
+	'..'
 }
 
 describe('color.create', func() {
