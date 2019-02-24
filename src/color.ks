@@ -174,13 +174,12 @@ func $blend(x: Number, y: Number, percentage: Number): Number { // {{{
 	return (1 - percentage) * x + percentage * y
 } // }}}
 
-func $binder(last: func, components, first: func, ...firstArgs): func { // {{{
-	let that = first**(...firstArgs)
+func $binder(last: func, components, first: func, ...firstArgs, that): func { // {{{
+	first**(...firstArgs, that)
 
 	let lastArgs := [that[component.field] for name, component of components]
-	lastArgs.push(that)
 
-	return last**(...lastArgs)
+	return last**(...lastArgs, that)
 } // }}}
 
 let $caster = {
@@ -504,17 +503,27 @@ export class Color {
 				const methods: Array = []
 
 				let field
-				for name, component of space.components {
+				for name, component of space.components when !component.family {
 					field = `_\(name)`
 
-					fields.push(macro private #i(field): Number = 0)
+					if component.type? {
+						fields.push(macro private #i(field): #i(component.type))
+					}
+					else {
+						fields.push(macro private #i(field): Number = 0)
+					}
 
 					methods.push(macro {
 						#[error(off)]
 						override #i(name)() => this.getField(#(name))
-						#[error(off)]
-						override #i(name)(value) => this.setField(#(name), value)
 					})
+
+					if !component.mutator {
+						methods.push(macro {
+							#[error(off)]
+							override #i(name)(value) => this.setField(#(name), value)
+						})
+					}
 				}
 
 				macro {
@@ -1056,10 +1065,8 @@ Color.registerSpace!({
 	name: Space::SRGB
 	alias: [Space::RGB]
 	formatters: {
-		hex(that): string { // {{{
-			return $hex(that)
-		} // }}}
-		srgb(that): string { // {{{
+		hex(that): String => $hex(that)
+		[Space::SRGB](that): String { // {{{
 			if that._alpha == 1 {
 				return 'rgb(' + that._red + ', ' + that._green + ', ' + that._blue + ')'
 			}
