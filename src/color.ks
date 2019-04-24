@@ -496,47 +496,51 @@ export class Color {
 		_alpha: Number = 0
 	}
 
-	macro {
-		registerSpace(@space: Object) {
-			if space.components? {
-				const fields: Array = []
-				const methods: Array = []
+	macro registerSpace(@space: Object) {
+		if space.components? {
+			const fields: Array = []
+			const methods: Array = []
 
-				let field
-				for name, component of space.components when !component.family {
-					field = `_\(name)`
+			let field
+			for name, component of space.components when !component.family {
+				field = `_\(name)`
 
-					if component.type? {
-						fields.push(macro private #i(field): #i(component.type))
-					}
-					else {
-						fields.push(macro private #i(field): Number = 0)
-					}
+				if component.type? {
+					fields.push(macro {
+						private #i(field): #i(component.type)
+					})
+				}
+				else {
+					fields.push(macro {
+						private #i(field): Number = 0
+					})
+				}
 
+				methods.push(macro {
+					#[error(off)]
+					override #i(name)() => this.getField(#(name))
+				})
+
+				if !component.mutator {
 					methods.push(macro {
 						#[error(off)]
-						override #i(name)() => this.getField(#(name))
+						override #i(name)(value) => this.setField(#(name), value)
 					})
-
-					if !component.mutator {
-						methods.push(macro {
-							#[error(off)]
-							override #i(name)(value) => this.setField(#(name), value)
-						})
-					}
-				}
-
-				macro {
-					Color.registerSpace(#(space))
-
-					impl Color {
-						#b(fields)
-						#b(methods)
-					}
 				}
 			}
-			else {
-				macro Color.registerSpace(#(space))
+
+			macro {
+				Color.registerSpace(#(space))
+
+				impl Color {
+					#b(fields)
+					#b(methods)
+				}
+			}
+		}
+		else {
+			macro {
+				Color.registerSpace(#(space))
 			}
 		}
 	}
@@ -708,7 +712,7 @@ export class Color {
 			}
 		}
 
-		space = $aliases[space] || space
+		space = $aliases[space] ?? space
 
 		this.space(space)
 		color = color.like(space)
