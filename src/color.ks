@@ -177,7 +177,7 @@ func $blend(x: Number, y: Number, percentage: Number): Number { // {{{
 func $binder(last: func, components, first: func, ...firstArgs, that): func { // {{{
 	first**(...firstArgs, that)
 
-	let lastArgs := [that[component.field] for name, component of components]
+	let lastArgs := [that[component.field] for const component of components]
 
 	return last**(...lastArgs, that)
 } // }}}
@@ -213,7 +213,7 @@ func $component(component, name: string, space: string): void { // {{{
 
 func $convert(that: Color, space: string, result = {_alpha: that._alpha}): object ~ Error { // {{{
 	if ?(s = $spaces[that._space]).converters[space] {
-		const args = [that[component.field] for name, component of s.components]
+		const args = [that[component.field] for const component of s.components]
 
 		args.push(result)
 
@@ -229,7 +229,7 @@ func $convert(that: Color, space: string, result = {_alpha: that._alpha}): objec
 } // }}}
 
 func $find(from: string, to: string): void { // {{{
-	for name of $spaces[from].converters {
+	for const :name of $spaces[from].converters {
 		if $spaces[name].converters[to] {
 			$spaces[from].converters[to] = $binder^^($spaces[name].converters[to], $spaces[name].components, $spaces[from].converters[name])
 
@@ -248,7 +248,7 @@ func $from(that: Color, args: array): Color { // {{{
 		return that if $parsers[args.shift()](that, args)
 	}
 	else {
-		for name, parse of $parsers {
+		for const parse of $parsers {
 			return that if parse(that, args)
 		}
 	}
@@ -501,9 +501,8 @@ export class Color {
 			const fields: Array = []
 			const methods: Array = []
 
-			let field
-			for name, component of space.components when !component.family {
-				field = `_\(name)`
+			for const component, name of space.components when !component.family {
+				const field = `_\(name)`
 
 				if component.type? {
 					fields.push(macro {
@@ -604,7 +603,7 @@ export class Color {
 				}
 			}
 			else if ?space.formatters {
-				for name, formatter of space.formatters {
+				for const formatter, name of space.formatters {
 					$formatters[name] = {
 						space: space.name,
 						formatter: formatter
@@ -633,14 +632,14 @@ export class Color {
 
 			if ?space.converters {
 				if ?space.converters.from {
-					for name, converter of space.converters.from {
+					for const converter, name of space.converters.from {
 						$space(name) if ?!$spaces[name]
 
 						$spaces[name].converters[space.name] = converter
 					}
 				}
 				if ?space.converters.to {
-					for name, converter of space.converters.to {
+					for const converter, name of space.converters.to {
 						$spaces[space.name].converters[name] = converter
 					}
 				}
@@ -657,7 +656,7 @@ export class Color {
 			}
 
 			if ?space.components {
-				for name, component of space.components {
+				for const component, name of space.components {
 					if ?component.family {
 						$spaces[space.name].components[name] = $spaces[component.family].components[name]
 
@@ -719,7 +718,7 @@ export class Color {
 
 		let components = $spaces[space].components
 
-		for name, component of components {
+		for const component of components {
 			if component.loop {
 				d = Math.abs(this[component.field] - color[component.field])
 
