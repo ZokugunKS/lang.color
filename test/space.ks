@@ -61,10 +61,10 @@ Color.registerSpace!({ // {{{ cmy
 		}
 	},
 	components: {
-		magenta: {
+		cyan: {
 			max: 255
 		},
-		green: {
+		magenta: {
 			max: 255
 		},
 		yellow: {

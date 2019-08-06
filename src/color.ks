@@ -545,11 +545,7 @@ export class Color {
 	}
 
 	static {
-		from(...args): Color | bool { // {{{
-			let color = $from(new Color(), args)
-
-			return false if color._dummy else color
-		} // }}}
+		from(...args): Color => new Color(...args)
 
 		greyscale(...args): Color | bool { // {{{
 			let model = args.last()
@@ -565,7 +561,7 @@ export class Color {
 			return false if color._dummy else color.greyscale(model)
 		} // }}}
 
-		hex(...args): Color | bool { // {{{
+		hex(...args): string | bool { // {{{
 			let color = $from(new Color(), args)
 
 			return false if color._dummy else color.hex()
@@ -831,7 +827,7 @@ export class Color {
 
 	#[error(off)]
 	format(format: string = this._space) { // {{{
-		if format ?= $formatters[format] {
+		if const format = $formatters[format] {
 			return format.formatter(?format.space ? this.like(format.space) : this)
 		}
 		else {
@@ -920,6 +916,8 @@ export class Color {
 		let that = this.like(Space::SRGB)
 		return that._red == 0 && that._green == 0 && that._blue == 0
 	} // }}}
+
+	isDummy(): bool => @dummy
 
 	#[error(off)]
 	isTransparent(): bool { // {{{
